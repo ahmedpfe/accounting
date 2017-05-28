@@ -1,0 +1,179 @@
+﻿<!DOCTYPE html>
+<html ng-app="AccountingApp">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="generator" content="http://cmsbots.com">
+    <!-------------------- Styles for Kendo ----------------------->
+    <link rel="stylesheet" href="../../lib/kendo-ui/styles/kendo.common.min.css" />
+    <link rel="stylesheet" href="../../lib/kendo-ui/styles/kendo.default.min.css" />
+    <link rel="stylesheet" href="../../lib/kendo-ui/styles/kendo.default.mobile.min.css" />
+    <!------------------------------------------------------------->
+    <!-------------------- Styles for External libraries -------------------->
+    <link rel="stylesheet" href="../../lib/angucomplete-alt/angucomplete-alt.css" />
+    <!----------------------------------------------------------------------->
+    <!-------------------- Styles for template -------------------->
+    <!-- Font Awesome -->
+    <link href="../../template/style/font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="../../template/style/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Custom Theme Style -->
+    <link href="../../template/style/custom.min.css" rel="stylesheet">
+    <!------------------------------------------------------>
+    <title>Accounting Module</title>
+</head>
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="index.html" class="site_title"><img src="../../template/Images/spark.png" height="80" width="150"  style="margin-left:10px;"/></a>
+                    </div>
+
+                    <div class="clearfix"></div>
+
+                    <!-- menu profile quick info -->
+                    <div class="profile clearfix">
+                        <div class="profile_pic">
+                            <img src="../../template/Images/amd.jpg" alt="..." class="img-circle profile_img">
+                        </div>
+                        <div class="profile_info">
+                            <span>Administrator</span>
+                            <h2>Chebbi Ahmed</h2>
+                        </div>
+                    </div>
+                    <!-- /menu profile quick info -->
+
+                    <br />
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <h3>General</h3>
+                            <ul class="nav side-menu">
+                                <li>
+                                    <a href="#/"><i class="fa fa-home"></i> Home </span></a>
+                                </li>
+                                <li>
+                                    <a><i class="glyphicon glyphicon-cog"></i> Configuration <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="form.html">Sheets</a></li>
+                                        <li><a href="#settings">Accounts</a></li>
+
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a><i class="glyphicon glyphicon-cog"></i> Setting <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="#sheets">Sheets</a></li>
+                                        <li><a href="#accounts">Accounts</a></li>
+
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#exercice"><i class="fa fa-desktop"></i> Fiscal Year</a>
+                                </li>
+                                <li>
+                                    <a><i class="fa fa-table"></i> Accounting Writing <span class="fa fa-chevron-down"></span></a>
+                                    <ul class="nav child_menu">
+                                        <li><a href="#saisie">Free Entry</a></li>
+                                        <li><a href="">Entry per Sheet</a></li>
+                                    </ul>
+                                </li>
+                                
+                            </ul>
+                        </div>
+
+                    </div>
+                    <!-- /sidebar menu -->
+                    <!-- /menu footer buttons -->
+                    <!-- /menu footer buttons -->
+                </div>
+            </div>
+
+            <!-- top navigation -->
+            <div class="top_nav">
+
+            </div>
+            <!-- /top navigation -->
+            <!-- page content -->
+            <div class="right_col" role="main">
+                <!-- top tiles -->
+                <div class="row tile_count">
+
+                </div>
+                <!-- /top tiles -->
+
+                <div class="row">
+                    <div class="col-md-12 col-sm-12 col-xs-12">
+                        <ng-view></ng-view>
+                        
+                    </div>
+
+                </div>
+                <br />
+            </div>
+            <!-- /page content -->
+            <!-- footer content -->
+            <footer></footer>
+            <!-- /footer content -->
+        </div>
+    </div>
+
+    
+    <!------------ JS for Kendo-Angular-JQuery ------------->
+    <script src="../../lib/kendo-ui/js/jquery.min.js"></script>
+    <script src="../../lib/angular/angular.js"></script>
+    <script src="../../lib/angular-route/angular-route.js"></script>
+    <script src="../../lib/kendo-ui/js/kendo.all.min.js"></script>
+    <!------------------------------------------------------>
+    <!--------------------- JS for Template ---------------->
+    <!-- Bootstrap -->
+    <script src="../../template/JS/bootstrap.min.js"></script>
+    <!-- FastClick -->
+    <script src="../../template/JS/fastclick.js"></script>
+
+    <!-- Custom Theme Scripts -->
+    <script src="../../template/JS/custom.min.js"></script>
+
+    <!------------------------------------------------------>
+    <!--------------JS for External libraries--------------->
+    <script src="../../lib/underscore/underscore.js"></script>
+    <script src="../../lib/angucomplete-alt/angucomplete-alt.js"></script>
+    <!------------------------------------------------------>
+    <!----------------------JS for SPA---------------------->
+    <script src="../Domain/GenericModel/IEntity.js"></script>
+    <script src="../Domain/Models/Compte.js"></script>
+    <script src="../Domain/Models/Journal.js"></script>
+    <script src="../Domain/Models/ExerciceComptable.js"></script>
+    <script src="../Domain/Models/OperationComptable.js"></script>
+    <script src="../Domain/Models/User.js"></script>
+    <script src="../Exceptions/Model/Exception.js"></script>
+
+    <script src="../app.js"></script>
+
+
+
+    <script src="../app.compiling.js"></script>
+    <script src="../app.routing.js"></script>
+
+    <script src="../Common/ConstantService.js"></script>
+    <script src="../Common/DataService.js"></script>
+
+    <script src="../Services/GenericService/GenericServices.js"></script>
+    <script src="../Services/SpecificServices/CompteService.js"></script>
+    <script src="../Services/SpecificServices/OperationServices.js"></script>
+    <script src="../Services/SpecificServices/EcritureService.js"></script>
+    <script src="../Exceptions/Common/HttpTranslator.js"></script>
+    <script src="../Directives/CustomizedForm.js"></script>
+    <script src="../Controllers/Comptes/PlanAccountsController.js"></script>
+    <script src="../Controllers/Comptes/UserAccountsManagementController.js"></script>
+    <script src="../Controllers/JournalController.js"></script>
+    <script src="../Controllers/ExerciceComptableController.js"></script>
+    <script src="../Controllers/Ecritures/EcritureLibreController.js"></script>
+    <!------------------------------------------------------>
+
+</body>
+</html>

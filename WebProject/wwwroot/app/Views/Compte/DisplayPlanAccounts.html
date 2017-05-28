@@ -1,0 +1,18 @@
+﻿
+            <div class="col-md-2">
+            </div>
+            <div class="col-md-8">
+                    <div class="alert alert-danger" id="errorDiv" ng-show="error" style="margin-top:10px;">
+
+                        <strong>{{error}}</strong>
+                    </div>
+                    <div class="alert alert-success" id="errorDiv" ng-show="success" style="margin-top:10px;">
+
+                        <strong>{{success}}</strong>
+                    </div>
+                    <kendo-grid id="kendoGrid" k-options="vm.gridOptions">
+                    </kendo-grid>
+                </div>
+            <div class="col-md-2">
+            </div>
+

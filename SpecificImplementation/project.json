@@ -1,0 +1,15 @@
+{
+  "version": "1.0.0-*",
+
+  "dependencies": {
+    "DataModel": "1.0.0-*",
+    "GenericImplementation": "1.0.0-*",
+    "NETStandard.Library": "1.6.0",
+    "ViewModel": "1.0.0-*"
+  },
+
+  "frameworks": {
+    "netcoreapp1.0": {
+    }
+  }
+}

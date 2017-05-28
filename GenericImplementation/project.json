@@ -1,0 +1,18 @@
+{
+  "version": "1.0.0-*",
+
+  "dependencies": {
+    "DataModel": "1.0.0-*",
+    "Microsoft.EntityFrameworkCore.Design.Core": "1.0.0-preview2-final",
+    "NETStandard.Library": "1.6.0",
+    "StructureMap.Microsoft.DependencyInjection": "1.2.1",
+    "StructureMap": "4.4.3",
+    "Microsoft.Extensions.Caching.Abstractions": "1.1.1"
+  },
+
+  "frameworks": {
+    "netcoreapp1.0": {
+
+    }
+  }
+}

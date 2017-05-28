@@ -1,0 +1,84 @@
+﻿
+    <div class="row" style="">
+
+        <div class="col-md-4">
+            <div class="page-header">
+                <h3> Create an account</h3>
+            </div>
+            <div class="page-header" ng-show="form_failure || form_success " style="height:52px;">
+                <div class="alert alert-success" ng-show="form_success">
+                    <strong>{{form_success}}</strong>
+                </div>
+                <div class="alert alert-danger" ng-show="form_failure">
+                    <strong>{{form_failure}}</strong>
+                </div>
+            </div>
+            <form role="form" name="post_form">
+                <input type="text" ng-model="Compte.idCpt" id="idCpt" style="display: none;" />
+                <div class="form-group">
+
+                    <label for="accountNumber">
+                        account Number:
+                    </label>
+                    <angucomplete-alt id="fetchingAccounts" local-data="uac.AllAccounts"
+                                      placeholder="account code must contains 8 digits"
+                                      pause="100"
+                                      search-fields="codeCpt"
+                                      title-field="codeCpt"
+                                      minlength="1"
+                                      input-class="form-control form-control-small"
+                                      selected-object="uac.selectedAccount"
+                                      text-no-results="false"
+                                      override-suggestions="true"
+                                      ng-model="Compte.codeCpt" ng-keyup="uac.check(Compte.codeCpt)" required
+                                      ng-maxlength="{{uac.Max}}" ng-minlength="{{uac.Max}}" name="code" ng-change="uac.flush()"
+                                      
+                                       />
+                    <div class="help-block">
+                        <span class="label label-danger" ng-show="post_form.code.$error.minlength">
+                            Your account's code is too short
+                        </span>
+                        <span class="label label-danger"  ng-show="post_form.code.$error.maxlength">
+                            Your account's code is too long
+                        </span>
+                        <span class="label label-danger" ng-show="post_form.code.$error.required">
+                        Account code is required
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group">
+
+                    <label for="accountTitle">
+                        account Name:
+                    </label>
+                    <input type="text" id="libelle" class="form-control" ng-model="Compte.libelleCpt" ng-readonly="{{uac.trueOrfalse}}" name="libelle" ng-class="{'has-error': post_form.libelle.$invalid}" required>
+                    <div class="help-block">
+                        <span class="label label-danger" ng-show="post_form.libelle.$error.required">
+                            Account name is required
+                        </span>
+                    </div>
+                </div>
+                    <center>
+                        <button type="submit" class="btn btn-default" ng-disabled="post_form.$invalid" ng-click="(uac.AddCompte(Compte))">
+                            {{buttonText}}
+                        </button>
+                        <button type="reset" ng-click="uac.flush()" class="btn btn-default">
+                            Cancel
+                        </button>
+                    </center>
+            </form>
+            <div ng-show="errors" style="color:red;text-align:center;">
+                <p class="message error" ng-repeat="error in errors"><b>{{error.msg}}</b></p>
+            </div>
+            </div>
+        <div class="col-md-8">
+            <div class="alert alert-danger" id="errorDiv" ng-show="error" style="margin-top:10px;">
+
+                <strong>{{error}}</strong>
+            </div>
+            <kendo-grid id="kendoGrid" k-options="uac.gridOptions" >
+            </kendo-grid>
+        </div>
+        
+    </div>
+

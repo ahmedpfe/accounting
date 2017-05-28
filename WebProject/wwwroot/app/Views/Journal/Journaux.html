@@ -1,0 +1,67 @@
+﻿
+    <div class="row" style="">
+
+        <div class="col-md-4">
+            <div class="page-header">
+                <h3> Create a sheet</h3>
+            </div>
+            <div class="page-header" ng-show="form_failure || form_success " style="height:52px;">
+                <div class="alert alert-success" ng-show="form_success">
+                    <strong>{{form_success}}</strong>
+                </div>
+                <div class="alert alert-danger" ng-show="form_failure">
+                    <strong>{{form_failure}}</strong>
+                </div>
+            </div>
+            <form role="form" name="post_form">
+                <div class="form-group">
+
+                    <label for="sheetPrefix">
+                        Sheet Prefix:
+                    </label>
+                    <input type="text" id="sheetPrefix" class="form-control" ng-model="Sheet.prefixJournal" name="prefix" maxlength="3" required>
+                    <div class="help-block">
+                        <span class="label label-danger" ng-show="post_form.prefix.$error.required">The abreviation is required</span>
+                        <span class="label label-danger" ng-show="post_form.prefix.$error.maxlength">The abreviation is too long</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="sheetTitle">
+                        Sheet Title:
+                    </label>
+                    <input type="text" id="sheetTitle" class="form-control" ng-model="Sheet.libelleJournal" name="libelle" required>
+                    <div class="help-block">
+                        <span class="label label-danger" ng-show="post_form.libelle.$error.required">The title is required</span>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="EcriturePattern">
+                        Sheet Scriptures 'pattern:
+                    </label>
+                    <select id="EcriturePattern" class="form-control" ng-model="Sheet.patternEcriture" name="pattern" ng-options="x for x in pattern" required></select>
+                    <div class="help-block">
+                        <span class="label label-danger" ng-show="post_form.pattern.$error.required">You have to choose your scriptures' pattern</span>
+                    </div>
+                </div>
+                <center>
+                    <button type="submit" class="btn btn-default" ng-disabled="post_form.$invalid" ng-click="vm.AddSheet(Sheet)">
+                        {{buttonText}}
+                    </button>
+                    <button type="reset" class="btn btn-default" ng-click="vm.flush()">
+                        Cancel
+                    </button>
+                </center>
+                <div class="form-group"></div>
+            </form>
+        </div>
+
+        <div class="col-md-8">
+            <div class="alert alert-danger" id="errorDiv" ng-show="error" style="margin-top:10px;">
+
+                <strong>{{error}}</strong>
+            </div>
+            <kendo-grid id="kendoGrid" k-options="vm.gridOptions" style="height:500px;">
+            </kendo-grid>
+        </div>
+
+    </div>
