@@ -11,7 +11,7 @@ namespace DataModel.Models
         }
 
         public long NumEcriture { get; set; }
-        public int NumSequenceEcriture { get; set; }
+        public long NumSequenceEcriture { get; set; }
         public string LibelleEcriture { get; set; }
         public DateTime DateEcriture { get; set; }
         public double? MontantDebitEcriture { get; set; }
@@ -29,6 +29,5 @@ namespace DataModel.Models
         public virtual Journal CodeJNavigation { get; set; }
         public virtual Compte CompteNavigation { get; set; }
         public virtual OperationComptable NumeroOperationNavigation { get; set; }
-        public virtual PieceJustificatif ReferenceNavigation { get; set; }
     }
 }

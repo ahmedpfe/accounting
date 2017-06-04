@@ -77,7 +77,8 @@ namespace SpecificImplementation.Services.Classes
             if (model == null) throw new ArgumentNullException("entity " + typeof(CompteViewModel));          
             Compte _oldEntity = FindEntity(c=>c.IdCpt == model.IdCpt);
             _oldEntity.LibelleCpt = model.LibelleCpt;
-            _oldEntity.VisibilityCpt = model.VisibilityCpt;         
+            _oldEntity.VisibilityCpt = model.VisibilityCpt;
+            _oldEntity.MontantCpt = model.MontantCpt;        
             _unitOfWork.Commit();
             return _builder.BuildEntity(_oldEntity);
         }

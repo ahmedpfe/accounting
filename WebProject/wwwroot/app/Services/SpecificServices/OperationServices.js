@@ -35,6 +35,16 @@ var app;
                 OperationFactory.prototype.getCurrentUser = function () {
                     return this.dataService.getSingle(this.currentUser);
                 };
+                OperationFactory.prototype.getRequestedOp = function (begin, end) {
+                    var rq = "Rq/";
+                    var parameters = begin.concat('/' + end);
+                    return this.dataService.get(this.constantService.apiPostURI.concat(rq).concat(parameters));
+                };
+                OperationFactory.prototype.getRequestedOpWithDetails = function (begin, end) {
+                    var rq = "RqAll/";
+                    var parameters = begin.concat('/' + end);
+                    return this.dataService.get(this.constantService.apiPostURI.concat(rq).concat(parameters));
+                };
                 return OperationFactory;
             }(app.Services.GenericService.Factory));
             SpecificServices.OperationFactory = OperationFactory;

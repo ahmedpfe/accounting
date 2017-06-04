@@ -147,8 +147,10 @@ E:\PFE\DEV\ACCOUNTING\SpecificImplementation\Properties\AssemblyInfo.cs
 E:\PFE\DEV\ACCOUNTING\SpecificImplementation\Repository\Classes\CompteRepository.cs
 E:\PFE\DEV\ACCOUNTING\SpecificImplementation\Repository\Interfaces\ICompteRepository.cs
 E:\PFE\DEV\ACCOUNTING\SpecificImplementation\Services\Classes\CompteService.cs
+E:\PFE\DEV\ACCOUNTING\SpecificImplementation\Services\Classes\EcritureService.cs
 E:\PFE\DEV\ACCOUNTING\SpecificImplementation\Services\Classes\JournalService.cs
 E:\PFE\DEV\ACCOUNTING\SpecificImplementation\Services\Classes\OperationService.cs
 E:\PFE\DEV\ACCOUNTING\SpecificImplementation\Services\Interfaces\ICompteService.cs
+E:\PFE\DEV\ACCOUNTING\SpecificImplementation\Services\Interfaces\IEcritureService.cs
 E:\PFE\DEV\ACCOUNTING\SpecificImplementation\Services\Interfaces\IJournalService.cs
 E:\PFE\DEV\ACCOUNTING\SpecificImplementation\Services\Interfaces\IOperationService.cs

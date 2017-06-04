@@ -12,7 +12,11 @@
         }
         public getNumEcritureGenere(code): ng.IPromise<string> {
             var options = "numEcriture/" + code;
-            return this.dataService.getString(this.constantService + options);
+            return this.dataService.getString(this.constantService.apiPostURI + options);
         }
+        //public createNewWriting(model): ng.IPromise<void> {
+        //    return this.dataService.add(this.constantService.apiPostURI,model);
+        //}
+
     }
 }

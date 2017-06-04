@@ -106,6 +106,7 @@ namespace test.Models
 
                 entity.HasOne(d => d.CompteNavigation)
                     .WithMany(p => p.EcritureComptable)
+                    .HasPrincipalKey(p => p.CodeCpt)
                     .HasForeignKey(d => d.Compte)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_EcritureComptable_Compte");
@@ -115,12 +116,6 @@ namespace test.Models
                     .HasForeignKey(d => d.NumeroOperation)
                     .OnDelete(DeleteBehavior.Restrict)
                     .HasConstraintName("FK_EcritureComptable_Operation");
-
-                entity.HasOne(d => d.ReferenceNavigation)
-                    .WithMany(p => p.EcritureComptable)
-                    .HasForeignKey(d => d.Reference)
-                    .OnDelete(DeleteBehavior.Restrict)
-                    .HasConstraintName("FK_EcritureComptable_PieceJustificatif");
             });
 
             modelBuilder.Entity<ExerciceComptable>(entity =>

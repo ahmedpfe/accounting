@@ -32,7 +32,7 @@ namespace DependenciesInjection.DIContainer
 
             For(typeof(IGenericRepository<>)).Use(typeof(GenericRepository<>));
             For(typeof(ICompteRepository)).Use(typeof(CompteRepository));
-
+            For(typeof(IOperationRepository)).Use(typeof(OperationRepository));
             /*--------------Builder Injection--------------*/
 
             For(typeof(IGenericBuilder<,>)).Use(typeof(GenericBuilder<,>));

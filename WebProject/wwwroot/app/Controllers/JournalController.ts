@@ -20,7 +20,7 @@
             self.Scope = $scope;
             self.Scope.button = true;
             self.timeOut = $timeout;
-            self.Scope.pattern = ['yyyy-Prefix', 'mm-yyyy-Prefix', 'dd-mm-yyyy-Prefix'];
+            self.Scope.pattern = ['yyyy-N°Seq', 'mm-yyyy-N°Seq', 'dd-mm-yyyy-N°Seq'];
             self.journalService = new app.Services.GenericService.Factory(dataService, "Journal");
             this.dataArray = new kendo.data.ObservableArray([]);
             $scope.$watch('button', function () {

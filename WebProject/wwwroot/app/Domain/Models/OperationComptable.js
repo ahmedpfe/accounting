@@ -16,7 +16,7 @@ var app;
         (function (Models) {
             var Operation = (function (_super) {
                 __extends(Operation, _super);
-                function Operation(libelleOp, montantOp, dateOp, idExerciceComptable, numPieceJustificatifOp, userId) {
+                function Operation(libelleOp, montantOp, dateOp, idExerciceComptable, numPieceJustificatifOp, userId, ecritureComptable) {
                     var _this = _super.call(this) || this;
                     _this.libelleOp = libelleOp;
                     _this.montantOp = montantOp;
@@ -24,12 +24,14 @@ var app;
                     _this.idExerciceComptable = idExerciceComptable;
                     _this.numPieceJustificatifOp = numPieceJustificatifOp;
                     _this.userId = userId;
+                    _this.ecritureComptable = ecritureComptable;
                     _this.libelleOp = libelleOp;
                     _this.montantOp = montantOp;
                     _this.dateOp = dateOp;
                     _this.idExerciceComptable = idExerciceComptable;
                     _this.numPieceJustificatifOp = numPieceJustificatifOp;
                     _this.userId = userId;
+                    _this.ecritureComptable = ecritureComptable;
                     return _this;
                 }
                 return Operation;

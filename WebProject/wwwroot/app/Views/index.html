@@ -40,7 +40,7 @@
                             <img src="../../template/Images/amd.jpg" alt="..." class="img-circle profile_img">
                         </div>
                         <div class="profile_info">
-                            <span>Administrator</span>
+                            <span>Accountant</span>
                             <h2>Chebbi Ahmed</h2>
                         </div>
                     </div>
@@ -74,6 +74,9 @@
                                 </li>
                                 <li>
                                     <a href="#exercice"><i class="fa fa-desktop"></i> Fiscal Year</a>
+                                </li>
+                                <li>
+                                    <a href="#listOperation"><i class="fa fa-desktop"></i> Accounting Operations</a>
                                 </li>
                                 <li>
                                     <a><i class="fa fa-table"></i> Accounting Writing <span class="fa fa-chevron-down"></span></a>
@@ -149,6 +152,7 @@
     <script src="../Domain/Models/Journal.js"></script>
     <script src="../Domain/Models/ExerciceComptable.js"></script>
     <script src="../Domain/Models/OperationComptable.js"></script>
+    <script src="../Domain/Models/EcritureComptable.js"></script>
     <script src="../Domain/Models/User.js"></script>
     <script src="../Exceptions/Model/Exception.js"></script>
 
@@ -161,11 +165,12 @@
 
     <script src="../Common/ConstantService.js"></script>
     <script src="../Common/DataService.js"></script>
-
+    <script src="../Decorators/SerialDecorator.js"></script>
     <script src="../Services/GenericService/GenericServices.js"></script>
     <script src="../Services/SpecificServices/CompteService.js"></script>
     <script src="../Services/SpecificServices/OperationServices.js"></script>
     <script src="../Services/SpecificServices/EcritureService.js"></script>
+    <script src="../Services/SpecificServices/SaveOperationService.js"></script>
     <script src="../Exceptions/Common/HttpTranslator.js"></script>
     <script src="../Directives/CustomizedForm.js"></script>
     <script src="../Controllers/Comptes/PlanAccountsController.js"></script>
@@ -173,6 +178,7 @@
     <script src="../Controllers/JournalController.js"></script>
     <script src="../Controllers/ExerciceComptableController.js"></script>
     <script src="../Controllers/Ecritures/EcritureLibreController.js"></script>
+    <script src="../Controllers/Operations/DisplayOperationController.js"></script>
     <!------------------------------------------------------>
 
 </body>

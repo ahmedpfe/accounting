@@ -1,0 +1,57 @@
+﻿
+<div class="container-fluid" style="background-color:white">
+    <div class="row">
+        <div class="col-md-4">
+            <div class="page-header">
+                <h3> Accounting Operations</h3>
+            </div>
+        </div>
+        <div class="col-md-8">
+
+            <div class="page-header">
+                <div id="entete">
+                    <div class="form-group">
+                        Begin date : <input kendo-date-picker k-format="'yyyy-MM-dd'" style="width:110px;margin-right:15px;"
+                                            ng-model="DateBegin" name="Date" required />
+                        End date : <input kendo-date-picker k-format="'yyyy-MM-dd'" style="width:110px;margin-right:15px;"
+                                          ng-model="DateEnd" name="Date" required />
+                        Voucher N° : <select id="voucher" ng-options="x for x in vucher" ng-model="opId" required><option></option></select>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-md-1">
+        </div>
+        <div class="col-md-10">
+            <kendo-grid id="kendoGrid" k-options="vm.gridOptions">
+                <div k-detail-template>
+                    <kendo-tabstrip>
+                        <ul>
+                            <li class="k-state-active">Accounting Writing</li>
+                        </ul>
+                        <div>
+                            <kendo-grid k-options="vm.detailGridOptions(dataItem)">
+                        </div>
+                    </kendo-tabstrip>
+                </div>
+            </kendo-grid>
+        </div>
+        <div class="col-md-1">
+        </div>
+    </div>
+            </div>
+        <style>
+            #voucher {
+                text-align: center;
+                width: 110px;
+                padding: 0px;
+                height: 30px;
+                margin-left: 15px;
+                border-radius: 5px;
+            }
+        </style>

@@ -25,5 +25,15 @@
         public getCurrentUser(): ng.IPromise<app.Domain.Models.User> {
             return this.dataService.getSingle(this.currentUser);
         }
+        public getRequestedOp(begin: string, end: string): ng.IPromise<app.Domain.Models.Operation[]> {
+            var rq = "Rq/";
+            var parameters = begin.concat('/'+end);
+            return this.dataService.get(this.constantService.apiPostURI.concat(rq).concat(parameters));
+        }
+        public getRequestedOpWithDetails(begin: string, end: string) {
+            var rq = "RqAll/";
+            var parameters = begin.concat('/' + end);
+            return this.dataService.get(this.constantService.apiPostURI.concat(rq).concat(parameters));
+        }
     }
 }

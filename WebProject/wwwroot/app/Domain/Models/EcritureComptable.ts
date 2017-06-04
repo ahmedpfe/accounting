@@ -11,11 +11,11 @@
         numeroOperation: number;
         codeJ: number;
         compte: number;
+        journal?: string;
     }
     export class Ecriture extends app.Domain.GenericModel.EntityBase implements IEcriture {
         idOp: number;
-        constructor(public numSequenceEcriture: number, public libelleEcriture: string, public dateEcriture: Date, public reference: string, public numeroOperation: number, public codeJ: number, public compte: number, public montantDebitEcriture?: number, public montantCreditEcriture?: number, public dateValidationEcriture?: Date, public dateEcheanceEcriture?: Date) {
-
+        constructor(public numSequenceEcriture: number, public libelleEcriture: string, public dateEcriture: Date, public reference: string, public numeroOperation: number, public codeJ: number, public compte: number, public montantDebitEcriture?: number, public montantCreditEcriture?: number, public dateValidationEcriture?: Date, public dateEcheanceEcriture?: Date, public Journal?: string) {
             super();
             this.numSequenceEcriture = numSequenceEcriture;
             this.libelleEcriture = libelleEcriture;
@@ -28,6 +28,7 @@
             this.montantCreditEcriture = montantCreditEcriture;
             this.dateEcheanceEcriture = dateEcheanceEcriture;
             this.dateValidationEcriture = dateValidationEcriture;
+            this.Journal = Journal;
         }
     }
 }

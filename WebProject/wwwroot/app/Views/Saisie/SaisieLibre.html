@@ -22,6 +22,9 @@
 
         <div class="row justify-content-center">
             <div class="col-md-9 col-lg-offset-1">
+                <div class="alert alert-success" ng-show="saveSuccess">
+                    <strong>Success:</strong> {{saveSuccess}}
+                </div>
                 <div class="alert alert-danger"  ng-show="preventSave">
                     <strong style="padding-right:20px;">Unauthorized: </strong> {{preventSave}}
                 </div>
@@ -60,9 +63,9 @@
                                 <td><select id="EcriturePattern" class="form-control" name="pattern" ng-options="x for x in journal" ng-model="ecriture.codeJ" required style="text-align:center" ng-readonly="$index!=0" ng-disabled="$index!=0" ng-change="vm.validPasser(ecriture, formName_{{$index}}.$valid)"><option></option></select></td>
                                 <td><input ng-model="ecriture.libelleEcriture" class="form-control" ng-change="vm.validPasser(ecriture, formName_{{$index}}.$valid)" type="text" required /></td>
                                 <td><input ng-model="ecriture.reference" class="form-control" ng-change="vm.validPasser(ecriture, formName_{{$index}}.$valid)" required type="text" /></td>
-                                <td><input ng-model="ecriture.compte" kendo-auto-complete k-options="Options" pattern="[1-7][0-9]*" class="form-control" ng-keyup="vm.accountChanged($event)" ng-change="vm.validPasser(ecriture, formName_{{$index}}.$valid)" required type="text" /></td>
-                                <td><input ng-model="ecriture.montantDebitEcriture" pattern="[0-9]+([\.,][0-9]+)?" step="any" type="number" class="form-control" style="float:left;" ng-required="!ecriture.montantCreditEcriture" ng-blur="vm.calculSomme($event,$index);" tabindex="{{$index+1}}" ng-focus="vm.checkValue($event,$index);focus=true" ng-change="vm.validPasser(ecriture, formName_{{$index}}.$valid)" /><button style="margin-left: -30px;margin-top:6px;height:22px;width:25px;" ng-show="sum<0 && focus&& data.length!=1"><span class="fa fa-bars" ng-click="vm.solderEcriture($index,'debit')"></span></button></td>
-                                <td><input ng-model="ecriture.montantCreditEcriture" pattern="[0-9]+([\.,][0-9]+)?" step="any" type="number" class="form-control" style="float:left;" ng-required="!ecriture.montantDebitEcriture" ng-blur="vm.calculSomme($event,$index);" tabindex="{{$index+1}}" ng-focus="vm.checkValue($event,$index);focus=true"  ng-change="vm.validPasser(ecriture, formName_{{$index}}.$valid)"/><button style="margin-left: -30px;margin-top:6px;height:22px;width:25px;" ng-show="sum>0 && focus&& data.length!=1"><span class="fa fa-bars" ng-click="vm.solderEcriture($index,'credit')"></span></button></td>
+                                <td><input ng-model="ecriture.compte" kendo-auto-complete k-options="Options" pattern="[1-7][0-9]*" class="form-control" ng-keyup="vm.accountChanged($event)" ng-change="vm.validPasser(ecriture, formName_{{$index}}.$valid);popuplate=formName_{{$index}};" required type="text" /></td>
+                                <td><input ng-model="ecriture.montantDebitEcriture" pattern="[0-9]+([\.,][0-9]+)?" step="any" type="number" class="form-control" style="float:left;" ng-required="!ecriture.montantCreditEcriture" ng-blur="vm.calculSomme($event,$index);" tabindex="{{$index+1}}" ng-focus="vm.checkValue($event,$index);focus=true" ng-change="vm.validPasser(ecriture, formName_{{$index}}.$valid)" /><button style="margin-left: -30px;margin-top:6px;height:22px;width:25px;" ng-show="sum<0 && focus&& data.length!=1" ng-click="vm.solderEcriture('debit',ecriture,popuplate.$valid)"><span class="fa fa-bars"></span></button></td>
+                                <td><input ng-model="ecriture.montantCreditEcriture" pattern="[0-9]+([\.,][0-9]+)?" step="any" type="number" class="form-control" style="float:left;" ng-required="!ecriture.montantDebitEcriture" ng-blur="vm.calculSomme($event,$index);" tabindex="{{$index+1}}" ng-focus="vm.checkValue($event,$index);focus=true"  ng-change="vm.validPasser(ecriture, formName_{{$index}}.$valid)"/><button style="margin-left: -30px;margin-top:6px;height:22px;width:25px;" ng-show="sum>0 && focus&& data.length!=1" ng-click="vm.solderEcriture('credit',ecriture,popuplate.$valid)"><span class="fa fa-bars"></span></button></td>
                                 <td><button ng-click="vm.remove($index)"style="height:33px;margin-top:3px;margin-left:5px;width:25px;"><span class="fa fa-remove" ></span></button></td>
                                 <td><input ng-model="ecriture.status" type="text" ng-init="ecriture.status=generee" style="display:none;" /></td>
                             </tr>
@@ -72,10 +75,9 @@
 
                     <div class="page-header">
                         <div class="col-md-8"></div>
-                        <div class="col-md-4" style="margin-top:25px; color:black">
-                            <div class="col-md-2"></div>     
-                            <div class="col-md-5"><label for="Opening">Debit : {{debit}}</label></div>
-                            <div class="col-md-5"><label for="Opening">Credit : {{credit}}</label></div>                                                
+                        <div class="col-md-4" style="margin-top:25px; color:black">  
+                            <div class="col-md-6"><label for="Opening">Debit : {{debit}}</label></div>
+                            <div class="col-md-6"><label for="Opening">Credit : {{credit}}</label></div>                                                
                         </div>
                     </div>
                     <div class="page-header">

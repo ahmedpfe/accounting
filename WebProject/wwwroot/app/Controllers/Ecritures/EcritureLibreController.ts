@@ -18,15 +18,18 @@
         currentUser: app.Domain.Models.IUser;
         Scope: ng.IScope;
         accounts: kendo.data.ObservableArray;
+        comptes: app.Domain.Models.ICompte[];
         operationToSave: app.Domain.Models.Operation;
+        EcritureToSave: app.Domain.Models.Ecriture;
         OperationService: app.Services.SpecificServices.OperationFactory;
         journalService: app.Services.GenericService.Factory;
         CompteService: app.Services.SpecificServices.CompteFactory;
         EcritureService: app.Services.SpecificServices.EcritureFactory;
+        journaux: app.Domain.Models.IJournal[];
         value: number;
         timeOut: ng.ITimeoutService;
-        static $inject = ['dataService', 'httpTranslator', '$http', '$q', '$scope', '$route', '$timeout'];
-        constructor(private dataService: app.Common.DataService, private httpTranslator: app.Exceptions.Common.HttpTranslator, public $http: ng.IHttpService, public $q: ng.IQService, $scope: ng.IScope, private $root: ng.route.IRoute, $timeout: ng.ITimeoutService) {
+        static $inject = ['dataService', 'httpTranslator', 'SaveEcritureService', '$http', '$q', '$scope', '$route', '$timeout'];
+        constructor(private dataService: app.Common.DataService, private httpTranslator: app.Exceptions.Common.HttpTranslator, public SaveEcritureService: app.Services.SpecificServices.SaveOperationService, public $http: ng.IHttpService, public $q: ng.IQService, $scope: ng.IScope, private $root: ng.route.IRoute, $timeout: ng.ITimeoutService) {
             var self = this;
             self.Scope = $scope;
             self.OperationService = new app.Services.SpecificServices.OperationFactory(dataService, "Operation", $http, $q);
@@ -34,6 +37,7 @@
             self.CompteService = new app.Services.SpecificServices.CompteFactory(dataService, "Compte", $http, $q);
             self.EcritureService = new app.Services.SpecificServices.EcritureFactory(dataService, "Ecriture", $http, $q);
             self.timeOut = $timeout;
+            self.journaux = new Array();
             self.numPieceC();
             self.dateSetting();          
             self.journalSetting();
@@ -57,8 +61,8 @@
                     }
                 });
             })
-            self.Scope.$watchGroup(['validate', 'suppressionError','preventSave'], () => {
-                if (self.Scope.suppressionError || self.Scope.preventSave) {
+            self.Scope.$watchGroup(['validate', 'suppressionError', 'preventSave', 'saveSuccess'], () => {
+                if (self.Scope.suppressionError || self.Scope.preventSave || self.Scope.saveSuccess || self.Scope.data.length==1) {
                         delete self.Scope.infoMsg;
                 }
                 else {
@@ -90,6 +94,7 @@
             var self = this;
             self.journalService.displaydata().then((result) => {
                 self.Scope.journal = new Array();
+                self.journaux.push.apply(self.journaux, result);
                 result.map((j: app.Domain.Models.Journal) => { self.Scope.journal.push(j.prefixJournal) });
             });
         }
@@ -126,24 +131,28 @@
                 e.currentTarget.value = "";
             }
         }
-        solderEcriture(index,imputer)
+        solderEcriture(imputer, form, isValid)
         {
             var self = this;
             if (imputer.localeCompare('debit')==0)
             {
-                if (self.Scope.data[index].montantDebitEcriture)
-                    self.Scope.data[index].montantDebitEcriture = Number(self.Scope.data[index].montantDebitEcriture) - Number(self.Scope.sum);
+                if (form.montantDebitEcriture)
+                    form.montantDebitEcriture = Number(form.montantDebitEcriture) - Number(self.Scope.sum);
                 else
-                    self.Scope.data[index].montantDebitEcriture = - Number(self.Scope.sum);
+                    form.montantDebitEcriture = - Number(self.Scope.sum);
             }
             else
             {
-                if (self.Scope.data[index].montantCreditEcriture)
-                    self.Scope.data[index].montantCreditEcriture = Number(self.Scope.data[index].montantCreditEcriture) + Number(self.Scope.sum);
+                if (form.montantCreditEcriture)
+                    form.montantCreditEcriture = Number(form.montantCreditEcriture) + Number(self.Scope.sum);
                 else
-                    self.Scope.data[index].montantCreditEcriture = Number(self.Scope.sum);
+                    form.montantCreditEcriture = Number(self.Scope.sum);
             }
-            self.sum();
+            if ((form.montantCreditEcriture || form.montantDebitEcriture) && form.codeJ && form.libelleEcriture && form.reference && form.compte)
+            {
+                isValid = true;
+            }
+            self.validPasser(form, isValid);
             self.Scope.focus = false;
         }
         dateSetting() {
@@ -163,7 +172,7 @@
             self.OperationService.getnombrePj().then((result) => {
                 var date = new Date();
                 var day = ('0' + (date.getDate().toString())).slice(-2)
-                var month = ('0' + (date.getMonth().toString())).slice(-2);
+                var month = ('0' + ((date.getMonth()+1).toString())).slice(-2);
                 var numP = ('000' + (result + 1).toString()).slice(-4);
                 self.numPiece = month.concat(day).concat(numP);
             });
@@ -216,35 +225,89 @@
         save() {
             var self = this;
             var op = Number(self.Scope.debit);
-            if (op == 0)
-            {
+            if (op == 0) {
                 self.Scope.preventSave = "No writing accounting to save.."
                 self.timeOut(() => {
                     delete self.Scope.preventSave;
                 }, self.httpTranslator.timer);
             }
-            else
-            {
-                if (self.Scope.sum != 0)
-                            {
-                                self.Scope.preventSave = "Your accounting writing must be balanced otherwise you can't save it"
-                                self.timeOut(() => {
-                                    delete self.Scope.preventSave;
-                                }, self.httpTranslator.timer);
+            else {
+                if (self.Scope.sum != 0) {
+                    self.Scope.preventSave = "Your accounting writing must be balanced otherwise you can't save it"
+                    self.timeOut(() => {
+                        delete self.Scope.preventSave;
+                    }, self.httpTranslator.timer);
+                }
+                else {
+                    var self = this;
+                    var chainedTasks = [];
+                    var codeJ = self.Scope.data[0].codeJ;
+                    self.operationToSave = new app.Domain.Models.Operation(self.Scope.data[0].libelleEcriture, 0, new Date(), self.exerciceCode, self.numPiece, self.currentUser.idUser);
+                    var codeJournal;
+                    var numEcritureGenere;
+                    self.OperationService.createNewData(self.operationToSave).then((operation: app.Domain.Models.Operation) => {
+                        self.operationToSave = operation;
+                        self.journaux.filter(function (obj) {
+                            if (obj.prefixJournal.localeCompare(codeJ) == 0) {
+                                codeJournal = obj.codeJournal;
                             }
-                            else
-                            {
-                                var self = this;
-                                self.operationToSave = new app.Domain.Models.Operation('Vente', 0, new Date(), self.exerciceCode, self.numPiece, self.currentUser.idUser);
-                                self.OperationService.createNewData(self.operationToSave).then((result) => {
-                                    self.EcritureService.getNumEcritureGenere(self.Scope.data[0].codeJ).then((result: string) => {
+                        });
+                    }).then(() => {
+                        self.EcritureService.getNumEcritureGenere(codeJournal).then((result: string) => {
+                            numEcritureGenere = result;
+                        }).then(() => {
+                            var sommeDebit = 0;
+                            var currentAccount;
+                            var montant;
+                            var ecritureToSave;
+                            let promises = self.Scope.data.map((data) => {
+                                if (data.status) {
 
-                                    });
-                                });
-                            }
-            }
-            
+                                    if (data.montantDebitEcriture && data.montantCreditEcriture) {
+                                        ecritureToSave = new app.Domain.Models.Ecriture(Number(numEcritureGenere), data.libelleEcriture, new Date(), data.reference, self.operationToSave.idOp, codeJournal, Number(data.compte), data.montantDebitEcriture, data.montantCreditEcriture);
+                                        montant = Number(data.montantDebitEcriture) - Number(data.montantCreditEcriture);
+                                        sommeDebit = sommeDebit + Number(data.montantDebitEcriture);
+                                    } else {
+                                        if (data.montantDebitEcriture) {
+                                            ecritureToSave = new app.Domain.Models.Ecriture(Number(numEcritureGenere), data.libelleEcriture, new Date(), data.reference, self.operationToSave.idOp, codeJournal, Number(data.compte), data.montantDebitEcriture);
+                                            montant = Number(data.montantDebitEcriture);
+                                            sommeDebit = sommeDebit + Number(data.montantDebitEcriture);
+                                        }
+                                        else {
+                                            ecritureToSave = new app.Domain.Models.Ecriture(Number(numEcritureGenere), data.libelleEcriture, new Date(), data.reference, self.operationToSave.idOp, codeJournal, Number(data.compte), 0, data.montantCreditEcriture);
+                                            montant = -Number(data.montantCreditEcriture);
+                                        }
+                                    }
+
+                                    var promise = self.SaveEcritureService.createWriting(ecritureToSave);
+                                    chainedTasks.push(promise);
+                                    var promise2 = self.SaveEcritureService.getAccount(Number(data.compte), montant);
+                                    chainedTasks.push(promise2);
+
+                                }
+                                return self.$q.all(chainedTasks);
+
+                            });
+                            self.$q.all(promises).then(() => {           
+                                self.operationToSave.montantOp = Number(self.operationToSave.montantOp) + sommeDebit;
+                                self.OperationService.updateData(self.operationToSave).then(() => {
+                                    self.numPieceC();
+                                    self.Scope.saveSuccess = "Your accounting writing saved.."
+                                    self.timeOut(() => {
+                                        delete self.Scope.saveSuccess;
+                                    }, self.httpTranslator.timer);
+                                    self.Scope.data = [{}];
+                                    self.sum();
+                                }); 
+                            });
+                        });
+                    });
+                }
+            }       
         }
+
+   
+        
         newLine(keyEvent, index) {
             var self = this;            
             if ((keyEvent.which === 13) && (index + 1 == self.Scope.data.length))
@@ -267,9 +330,10 @@
          getAllAccounts(){
              var self = this;
              var valid;
-            self.CompteService.displayWrittingAccounts()
-                .then((result) => {
-                    self.accounts = new kendo.data.ObservableArray([]);
+             self.CompteService.displayWrittingAccounts()
+                 .then((result: app.Domain.Models.ICompte[]) => {
+                     self.comptes = result;
+                    self.accounts = new kendo.data.ObservableArray([]);               
                     self.accounts.push.apply(self.accounts,result);
                     self.Scope.Options = {
                         dataTextField: 'codeCpt',
@@ -295,7 +359,7 @@
                             var value = this.value();
                             if (!self.regIsNumber(value))
                                 this.value('');
-                            console.log(value);
+                            //console.log(value);
                         },
                         select: function (e) {
                             valid = true;

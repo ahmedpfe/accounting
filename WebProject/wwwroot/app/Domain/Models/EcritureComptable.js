@@ -16,7 +16,7 @@ var app;
         (function (Models) {
             var Ecriture = (function (_super) {
                 __extends(Ecriture, _super);
-                function Ecriture(numSequenceEcriture, libelleEcriture, dateEcriture, reference, numeroOperation, codeJ, compte, montantDebitEcriture, montantCreditEcriture, dateValidationEcriture, dateEcheanceEcriture) {
+                function Ecriture(numSequenceEcriture, libelleEcriture, dateEcriture, reference, numeroOperation, codeJ, compte, montantDebitEcriture, montantCreditEcriture, dateValidationEcriture, dateEcheanceEcriture, Journal) {
                     var _this = _super.call(this) || this;
                     _this.numSequenceEcriture = numSequenceEcriture;
                     _this.libelleEcriture = libelleEcriture;
@@ -29,6 +29,7 @@ var app;
                     _this.montantCreditEcriture = montantCreditEcriture;
                     _this.dateValidationEcriture = dateValidationEcriture;
                     _this.dateEcheanceEcriture = dateEcheanceEcriture;
+                    _this.Journal = Journal;
                     _this.numSequenceEcriture = numSequenceEcriture;
                     _this.libelleEcriture = libelleEcriture;
                     _this.dateEcriture = dateEcriture;
@@ -40,6 +41,7 @@ var app;
                     _this.montantCreditEcriture = montantCreditEcriture;
                     _this.dateEcheanceEcriture = dateEcheanceEcriture;
                     _this.dateValidationEcriture = dateValidationEcriture;
+                    _this.Journal = Journal;
                     return _this;
                 }
                 return Ecriture;

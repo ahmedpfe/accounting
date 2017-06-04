@@ -2960,6 +2960,7 @@
           "DataModel": "1.0.0",
           "GenericImplementation": "1.0.0",
           "NETStandard.Library": "1.6.1",
+          "System.Interactive.Async": "3.0.0",
           "ViewModel": "1.0.0"
         },
         "runtime": {

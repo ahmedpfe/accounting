@@ -25,7 +25,7 @@ var app;
                 }
                 EcritureFactory.prototype.getNumEcritureGenere = function (code) {
                     var options = "numEcriture/" + code;
-                    return this.dataService.getString(this.constantService + options);
+                    return this.dataService.getString(this.constantService.apiPostURI + options);
                 };
                 return EcritureFactory;
             }(app.Services.GenericService.Factory));

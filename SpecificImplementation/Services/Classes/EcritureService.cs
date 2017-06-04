@@ -34,26 +34,28 @@ namespace SpecificImplementation.Services.Classes
 
         public string numEcritureGenere(long codeJ)
         {
-            int max = 5;
+            int length = 12;
             Journal _journal = _journalRepository.FindBy(j => j.CodeJournal == codeJ).FirstOrDefault();
             StringBuilder _patternBuilder = new StringBuilder();
+            var date = DateTime.Now;
             switch (_journal.PatternEcriture)
             {
-                case "yyyy-Prefix":
+                case "yyyy-N°Seq":
                     {
-                        _patternBuilder.Append(DateTime.Now.Year);
+                        _patternBuilder.Append(date.Year);
                         break;
                     }
-                case "mm-yyyy-Prefix":
+                case "mm-yyyy-N°Seq":
                     {
-                        var date = DateTime.Now;
-                        _patternBuilder.Append(date.Month).Append(date.Year);
+                        string _month = ('0'+date.Month.ToString());
+                        _patternBuilder.Append(_month.Substring(_month.Length-2)).Append(date.Year);
                         break;
                     }
-                case "dd-mm-yyyy-Prefix":
+                case "dd-mm-yyyy-N°Seq":
                     {
-                        var date = DateTime.Now;
-                        _patternBuilder.Append(date.Date).Append(date.Month).Append(date.Year);
+                        string _month = ('0' + date.Month.ToString());
+                        string _day = ('0' + date.Day.ToString());
+                        _patternBuilder.Append(_day.Substring(_day.Length - 2)).Append(_month.Substring(_month.Length - 2)).Append(date.Year);
                         break;
                     }
                 default:
@@ -61,12 +63,16 @@ namespace SpecificImplementation.Services.Classes
                         break;
                     }
             }
-            int nbr = _ecritureRepository.FindBy(e => e.CodeJ == _journal.CodeJournal && e.NumEcriture.ToString().StartsWith(_builder.ToString())).GroupBy(e => e.NumeroOperation).Select(e => e.First()).Count();
+            int max = length - _patternBuilder.Length;
+            string pattern = _patternBuilder.ToString();
+            if (pattern[0] == '0')
+              pattern = pattern.Substring(1);
+            int nbr = _ecritureRepository.FindBy(e => e.CodeJ == _journal.CodeJournal && e.NumSequenceEcriture.ToString().StartsWith(pattern)).GroupBy(e => e.NumSequenceEcriture).Select(e => e.First()).Count();
             StringBuilder _seq = new StringBuilder(new String('0', max - 1));
             _seq.Append(nbr + 1);
             string numSeq = _seq.ToString();
-            String _numSQ = numSeq.Substring(numSeq.Length - max);
-            _patternBuilder.Append(_journal.PrefixJournal).Append(_numSQ);
+            string _numSQ = numSeq.Substring(numSeq.Length - max);
+            _patternBuilder.Append(_numSQ);
             return _patternBuilder.ToString();
         }
     }

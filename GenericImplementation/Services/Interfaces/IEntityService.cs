@@ -17,6 +17,7 @@ namespace GenericImplementation.Services.Interfaces
         TEntity FindEntity(Expression<Func<TEntity, bool>> predicate);
         bool Exist(Expression<Func<TEntity, bool>> predicate);
         IEnumerable<TModel> GetAllWithDetails(params Expression<Func<TEntity, object>>[] includeProperties);
+        IEnumerable<TModel> GetSpecifiedWithDetails(Expression<Func<TEntity, bool>> wherePredicate, params Expression<Func<TEntity, object>>[] includeProperties);
         TEntity GetWithDetails(Expression<Func<TEntity, bool>> wherePredicate, params Expression<Func<TEntity, object>>[] includeProperties);
     }
 }

@@ -26,6 +26,10 @@ var app;
                     templateUrl: "/app/Views/ExerciceComptable/ExerciceDefinition.html",
                     controller: "ExerciceComptaCtrl as vm"
                 })
+                    .when("/listOperation", {
+                    templateUrl: "/app/Views/Operation/DisplayOperations.html",
+                    controller: "ListOperationCtrl as vm"
+                })
                     .when("/saisie", {
                     templateUrl: "/app/Views/Saisie/SaisieLibre.html",
                     controller: "EntryWritingCtrl as vm"

@@ -104,5 +104,10 @@ namespace GenericImplementation.Services.Classes
             _logger.LogDebug("{method} called", nameof(GetWithDetails));
             return _repository.GetWithDetails(wherePredicate, includeProperties).FirstOrDefault();
         }
+        public IEnumerable<TModel> GetSpecifiedWithDetails(Expression<Func<TEntity, bool>> wherePredicate, params Expression<Func<TEntity, object>>[] includeProperties)
+        {
+            _logger.LogDebug("{method} called", nameof(GetWithDetails));
+            return _repository.GetWithDetails(wherePredicate, includeProperties).Select(item => _builder.BuildEntity(item)).AsEnumerable();
+        }
     }
 }
